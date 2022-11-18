@@ -1,4 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
+
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -7,10 +9,10 @@ module.exports = {
     mumbai: {
       url: process.env.TESTNET_RPC,
       accounts: [process.env.PRIVATE_KEY]
-    },
+    }, 
   },
     etherscan: {
-      apiKey: process.env.POLYGON_API_KEY
+      apiKey: process.env.POLYGONSCAN_API_KEY
     }
-};
+}
 
