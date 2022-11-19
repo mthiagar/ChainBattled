@@ -62,19 +62,25 @@ contract ChainBattles is ERC721URIStorage {
         );
     }
 
+    function random(uint number) public view returns(uint){
+        return uint(keccak256(abi.encodePacked(block.timestamp,block.difficulty,  
+        msg.sender))) % number;
+    }
+
+
     function mint() public {
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _safeMint(msg.sender, newItemId);
-        tokenIdToLevels[newItemId] = 0;
+        tokenIdToStats[newItemId] = stats(0, random(10), random(10), random(10));
         _setTokenURI(newItemId, getTokenURI(newItemId));
     }
 
     function train(uint256 tokenId) public {
         require(_exists(tokenId), "Please use an existing token");
         require(ownerOf(tokenId) == msg.sender, "You must own this token to train it");
-        uint256 currentLevel = tokenIdToLevels[tokenId];
-        tokenIdToLevels[tokenId] = currentLevel + 1;
+        uint256 currentLevel = tokenIdToStats[tokenId].level;
+        tokenIdToStats[tokenId].level = currentLevel + 1;
         _setTokenURI(tokenId, getTokenURI(tokenId));
     }
 
