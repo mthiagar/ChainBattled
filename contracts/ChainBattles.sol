@@ -11,7 +11,14 @@ contract ChainBattles is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    mapping(uint256 => uint256) public tokenIdToLevels;
+    struct stats {
+        uint256 level;
+        uint256 speed;
+        uint256 strength;
+        uint256 life;
+    }
+
+    mapping(uint256 => stats) public tokenIdToStats;
 
     constructor() ERC721 ("Chain Battles", "CBTLS"){
 
@@ -35,7 +42,7 @@ contract ChainBattles is ERC721URIStorage {
     }
 
     function getLevels(uint256 tokenId) public view returns (string memory) {
-        uint256 levels = tokenIdToLevels[tokenId];
+        uint256 levels = tokenIdToStats[tokenId].level;
         return levels.toString();
     }
 
